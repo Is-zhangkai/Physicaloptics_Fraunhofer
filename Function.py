@@ -5,37 +5,45 @@
 # @Software: PyCharm
 
 import numpy as np
-
 from scipy.special import jve
 
 
-def Diffraction_Rect(mylambda, size_hole_x, size_hole_y, size_screen, distance=1000, f=400):
+def Diffraction_Grating(mylambda, size_hole, size_source=10, distance=1000, N=400):
     k = 2 * np.pi / mylambda
-    xx = np.arange(-size_screen / 2, size_screen / 2, size_screen / f)
-    yy = xx
+    delt = size_source / N
 
-    XX, YY = np.meshgrid(xx, yy)
-    BB = (k * size_hole_x * XX) / (2. * distance)
-    HH = (k * size_hole_y * YY) / (2. * distance)
+    xx = np.arange(-size_source / 2, size_source / 2, delt)
+    xx = Rect(xx / size_hole)
+    XX, YY = np.meshgrid(xx, xx)
+    rect = XX * YY
+    I_fft, XX, YY = Fraunhofer_prop(rect, mylambda, delt, distance, N)
 
-    # E = size_hole_x * size_hole_y * (np.sin(BB) / BB) * (np.sin(HH) / HH)
-    E = size_hole_x * size_hole_y * (np.sin(BB) / BB) * (np.sin(HH) / HH) * np.exp(
+    BB = (k * size_hole * XX) / (2. * distance)
+    HH = (k * size_hole * YY) / (2. * distance)
+
+    E = size_hole * size_hole * (np.sin(BB) / BB) * (np.sin(HH) / HH)
+    E = size_hole * size_hole * (np.sin(BB) / BB) * (np.sin(HH) / HH) * np.exp(
         1j * k * ((XX ** 2 + YY ** 2) / (2 * distance)))
 
     I = np.abs(E ** 2)
 
     I = (I - np.min(I)) / (np.max(I) - np.min(I))
     I = np.uint8(I * 255)
-    I_center = I[round(np.size(I, 1) / 2)]
-    return I, I_center
+
+    return I, I_fft
 
 
-def Diffraction_Circle(mylambda, radius, size_screen, distance=1000, f=400):
+def Diffraction_Circle(mylambda, radius, size_source=10, distance=1000, N=400):
     k = 2 * np.pi / mylambda
-    xx = np.arange(-size_screen / 2, size_screen / 2, size_screen / f)
-    yy = xx
+    delt = size_source / N
 
-    XX, YY = np.meshgrid(xx, yy)
+    xx = np.arange(-size_source / 2, size_source / 2, delt)
+
+    XX, YY = np.meshgrid(xx, xx)
+    circ = Circ(XX, YY, radius)
+
+    I_fft, XX, YY = Fraunhofer_prop(circ, mylambda, delt, distance, N)
+
     theta = np.arctan(np.sqrt(XX ** 2 + YY ** 2) / distance)
     # theta=np.sqrt(XX**2+YY**2)/distance       #近似取值
     theta[theta == 0] = None
@@ -47,15 +55,20 @@ def Diffraction_Circle(mylambda, radius, size_screen, distance=1000, f=400):
     I = (I - np.min(I)) / (np.max(I) - np.min(I))
 
     I = np.uint8(I * 255)
-    print((np.size(I, 1)))
-    I_center = I[round(np.size(I, 1) / 2)]
-    return I, I_center
+
+    return I, I_fft
 
 
-def Diffraction_Grating(mylambda, a, d, N, size_screen, distance=1000, f=400):
-    xx = np.arange(-size_screen / 2, size_screen / 2, size_screen / f)
-    yy = xx
-    XX, YY = np.meshgrid(xx, yy)
+def Diffraction_Grating(mylambda, a, d, size_source=10, distance=1000, N=1000):
+
+    delt = size_source / N
+
+    xx = np.arange(-size_source / 2, size_source / 2, delt)
+    num = int(size_source // d + 1)
+    grating = Grating(a, d, xx, N, num)
+    I_fft, XX, YY = Fraunhofer_prop(grating, mylambda, delt, distance, N)
+    I_fft[:] = I_fft[round(np.size(I_fft, 1) / 2)]
+
     theta = np.arctan(np.sqrt(XX ** 2) / distance)
     # theta=np.sqrt(XX**2+YY**2)/distance       #近似取值
     theta[theta == 0] = None
@@ -68,114 +81,56 @@ def Diffraction_Grating(mylambda, a, d, N, size_screen, distance=1000, f=400):
     I = (I - np.min(I)) / (np.max(I) - np.min(I))
 
     I = np.uint8(I * 255)
-    print((np.size(I, 1)))
-    I_center = I[round(np.size(I, 1) / 2)]
-    return I, I_center
+
+    return I, I_fft
 
 
-def FFT_Rect(mylambda, size_hole_x, size_hole_y, size_screen, distance=1000, f=400):
+def Fraunhofer_prop(img_In, mylambda, delta, distance, N):
     k = 2 * np.pi / mylambda
-
-    size_screen = np.arange(-size_screen / 2, size_screen / 2, size_screen / f)
-    xx = yy = np.zeros(f)
-    xx[np.abs(size_screen - 0) < (size_hole_x / 2)] = 1
-    yy[np.abs(size_screen - 0) < (size_hole_y / 2)] = 1
-    XX, YY = np.meshgrid(xx, yy)
-    rect = XX * YY
-
-    E = np.fft.fftshift(np.fft.fft2(np.fft.fftshift(rect)))
-    # E = E * np.exp(1j * k * distance) * np.exp(1j * k * (XX ** 2 + YY * 2) / (2 * distance)) / (
-    #         1j * distance * mylambda)
-
-    I = np.abs(np.real(E) ** 2)
-    I = (I - np.min(I)) / (np.max(I) - np.min(I))
-    I = np.uint8(I * 255)
-    I_center = I[round(np.size(I, 1) / 2)]
-    return I, rect
-
-
-def FFT_Circle(mylambda, radius, size_screen, distance=1000, f=400):
-    k = 2 * np.pi / mylambda
-
-    xx = np.arange(-size_screen / 2, size_screen / 2, size_screen / f)
+    fx = np.arange(-1 / 2, 1 / 2, 1 / N) / delta
+    xx = mylambda * distance * fx
     XX, YY = np.meshgrid(xx, xx)
+    E = np.fft.fftshift(np.fft.fft2(np.fft.fftshift(img_In))) * delta ** 2
 
-    circ = np.zeros((f, f))
-    circ[np.sqrt(XX ** 2 + YY ** 2) < radius] = 1
-
-    E = np.fft.fftshift(np.fft.fft2(np.fft.fftshift(circ)))
     E = E * np.exp(1j * k * distance) * np.exp(1j * k * (XX ** 2 + YY * 2) / (2 * distance)) / (
             1j * distance * mylambda)
 
-    I = np.abs(E ** 2)
-    I = (I - np.min(I)) / (np.max(I) - np.min(I))
-    I = np.uint8(I * 255)
-    print((np.size(I, 1)))
-    I_center = I[round(np.size(I, 1) / 2)]
-    return I, I_center
+    I_fft = np.abs(E ** 2)
+    I_fft = (I_fft - np.min(I_fft)) / (np.max(I_fft) - np.min(I_fft))
+    I_fft = np.uint8(I_fft * 255)
 
-
-def FFT_Grating(mylambda, a, d, N, size_screen, distance=1000, f=400):
-    k = 2 * np.pi / mylambda
-    xx = np.arange(-size_screen / 2, size_screen / 2, size_screen / f)
-    # E = np.zeros(f)
-    # mm = np.zeros(f)
-    E = np.zeros((f,f))
-    mm = np.zeros(f)
-    print(f)
-    if N %2 == 0:
-        for i in range(N // 2 ):
-            print(i)
-            circ = Rect((xx + d / 2 + i  * d) / a)
-            # circ, YY = np.meshgrid(circ, circ)
-            # E = E + np.fft.fftshift(np.fft.fft2(np.fft.fftshift(circ)))
-            mm = mm + circ
-            circ = Rect((xx - d / 2 - i  * d) / a)
-            # circ, YY = np.meshgrid(circ, circ)
-            mm = mm + circ
-            # E = E + np.fft.fftshift(np.fft.fft2(np.fft.fftshift(circ)))
-            # E = E * np.exp(1j * k * distance) * np.exp(1j * k * (XX ** 2 + YY * 2) / (2 * distance)) / (
-            #         1j * distance * mylambda)
-
-    else:
-
-        circ = Rect( xx / a)
-        # circ, YY = np.meshgrid(circ, circ)
-        mm = mm + circ
-        # E = E + np.fft.fftshift(np.fft.fft2(np.fft.fftshift(circ)))
-        for i in range(1, N // 2+1):
-            print(i)
-            circ = Rect((xx + i * d) / a)
-            # circ, YY = np.meshgrid(circ, circ)
-            mm = mm + circ
-            # E = E + np.fft.fftshift(np.fft.fft2(np.fft.fftshift(circ)))
-            circ = Rect((xx - i * d) / a)
-            # circ, YY = np.meshgrid(circ, circ)
-            mm = mm + circ
-            # E = E + np.fft.fftshift(np.fft.fft2(np.fft.fftshift(circ)))
-
-    # mm=(mm-np.min(mm))/(np.max(mm)-np.min(mm))
-    aasd, ass = np.meshgrid(mm, mm)
-
-    E = np.fft.fftshift(np.fft.fft(np.fft.fftshift(aasd)))
-
-
-    # E ,Ey=np.meshgrid(E,E)
-    # E = E * np.exp(1j
-    # * k * distance) * np.exp(1j * k * (XX ** 2 + YY * 2) / (2 * distance)) / (
-    #         1j * distance * mylambda)
-
-
-    I = np.abs(E ** 2)
-    I = (I - np.min(I)) / (np.max(I) - np.min(I))
-    I = np.uint8(I * 255)
-
-    I_center = I[round(np.size(I, 1) / 2)]
-
-    return I, aasd
+    return I_fft, XX, YY
 
 
 def Rect(x):
     result = np.zeros(np.size(x))
-    result[abs(x) < 0.5] = True
+    result[abs(x) <= 0.5] = 1
     return result
+
+
+def Circ(xx, yy, radius):
+    result = np.zeros((np.size(xx, 1), np.size(yy, 1)))
+    result[abs(xx ** 2 + yy ** 2) <= radius ** 2] = 1
+    return result
+
+
+def Grating(a, d, xx, N, num):
+    grating = np.zeros(N)
+    if N % 2 == 0:
+        for i in range(num // 2):
+            print(i)
+            rect = Rect((xx + d / 2 + i * d) / a)
+            grating += rect
+            rect = Rect((xx - d / 2 - i * d) / a)
+            grating += rect
+    else:
+        rect = Rect(xx / a)
+        grating += rect
+        for i in range(1, num // 2 + 1):
+            print(i)
+            rect = Rect((xx + i * d) / a)
+            grating += rect
+            rect = Rect((xx - i * d) / a)
+            grating += rect
+    grating, ass = np.meshgrid(grating, grating)
+    return grating
