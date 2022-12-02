@@ -8,7 +8,16 @@ import numpy as np
 from scipy.special import jve
 
 
-def Diffraction_Grating(mylambda, size_hole, size_source=10, distance=1000, N=400):
+def Diffraction_Rect(mylambda, size_hole, size_source=10, distance=1000, N=400):
+    """
+    @Author:zhangkai
+    :param mylambda:
+    :param size_hole:
+    :param size_source:
+    :param distance:
+    :param N:
+    :return:
+    """
     k = 2 * np.pi / mylambda
     delt = size_source / N
 
@@ -21,12 +30,11 @@ def Diffraction_Grating(mylambda, size_hole, size_source=10, distance=1000, N=40
     BB = (k * size_hole * XX) / (2. * distance)
     HH = (k * size_hole * YY) / (2. * distance)
 
-    E = size_hole * size_hole * (np.sin(BB) / BB) * (np.sin(HH) / HH)
+    # E = size_hole * size_hole * (np.sin(BB) / BB) * (np.sin(HH) / HH)
     E = size_hole * size_hole * (np.sin(BB) / BB) * (np.sin(HH) / HH) * np.exp(
         1j * k * ((XX ** 2 + YY ** 2) / (2 * distance)))
 
     I = np.abs(E ** 2)
-
     I = (I - np.min(I)) / (np.max(I) - np.min(I))
     I = np.uint8(I * 255)
 
@@ -34,6 +42,15 @@ def Diffraction_Grating(mylambda, size_hole, size_source=10, distance=1000, N=40
 
 
 def Diffraction_Circle(mylambda, radius, size_source=10, distance=1000, N=400):
+    """
+    @Author:zhangkai
+    :param mylambda:
+    :param radius:
+    :param size_source:
+    :param distance:
+    :param N:
+    :return:
+    """
     k = 2 * np.pi / mylambda
     delt = size_source / N
 
@@ -59,12 +76,22 @@ def Diffraction_Circle(mylambda, radius, size_source=10, distance=1000, N=400):
     return I, I_fft
 
 
-def Diffraction_Grating(mylambda, a, d, size_source=10, distance=1000, N=1000):
+def Diffraction_Grating(mylambda, a, d,num, size_source=10, distance=1000, N=1000):
+    """
+    @Author:zhangkai
+    :param mylambda:
+    :param a:
+    :param d:
+    :param size_source:
+    :param distance:
+    :param N:
+    :return:
+    """
 
     delt = size_source / N
 
     xx = np.arange(-size_source / 2, size_source / 2, delt)
-    num = int(size_source // d + 1)
+
     grating = Grating(a, d, xx, N, num)
     I_fft, XX, YY = Fraunhofer_prop(grating, mylambda, delt, distance, N)
     I_fft[:] = I_fft[round(np.size(I_fft, 1) / 2)]
@@ -86,6 +113,15 @@ def Diffraction_Grating(mylambda, a, d, size_source=10, distance=1000, N=1000):
 
 
 def Fraunhofer_prop(img_In, mylambda, delta, distance, N):
+    """
+    @Author:zhangkai
+    :param img_In:
+    :param mylambda:
+    :param delta:
+    :param distance:
+    :param N:
+    :return:
+    """
     k = 2 * np.pi / mylambda
     fx = np.arange(-1 / 2, 1 / 2, 1 / N) / delta
     xx = mylambda * distance * fx
@@ -103,18 +139,39 @@ def Fraunhofer_prop(img_In, mylambda, delta, distance, N):
 
 
 def Rect(x):
+    """
+    @Author:zhangkai
+    :param x:
+    :return:
+    """
     result = np.zeros(np.size(x))
     result[abs(x) <= 0.5] = 1
     return result
 
 
 def Circ(xx, yy, radius):
+    """
+    @Author:zhangkai
+    :param xx:
+    :param yy:
+    :param radius:
+    :return:
+    """
     result = np.zeros((np.size(xx, 1), np.size(yy, 1)))
     result[abs(xx ** 2 + yy ** 2) <= radius ** 2] = 1
     return result
 
 
 def Grating(a, d, xx, N, num):
+    """
+    @Author:zhangkai
+    :param a:
+    :param d:
+    :param xx:
+    :param N:
+    :param num:
+    :return:
+    """
     grating = np.zeros(N)
     if N % 2 == 0:
         for i in range(num // 2):

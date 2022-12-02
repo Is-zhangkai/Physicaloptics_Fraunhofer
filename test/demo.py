@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2022/12/2 16:52
 # @Author  : zhangkai
-# @File    : qqqq.py
+# @File    : demo.py
 # @Software: PyCharm
 import numpy as np
 from matplotlib import pyplot as plt
 from scipy.special import jve
-
-import  Function as fun
 
 
 

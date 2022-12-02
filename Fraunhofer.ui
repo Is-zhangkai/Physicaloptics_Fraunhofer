@@ -52,7 +52,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>-1</y>
+      <y>10</y>
       <width>1081</width>
       <height>51</height>
      </rect>
@@ -64,7 +64,7 @@
      </font>
     </property>
     <property name="text">
-     <string/>
+     <string>夫琅禾费衍射仿真</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -116,7 +116,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideMiddle</enum>
@@ -242,7 +242,7 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_hole_x_rect">
+     <widget class="QLineEdit" name="lineEdit_hole_rect">
       <property name="geometry">
        <rect>
         <x>390</x>
@@ -276,57 +276,57 @@
        </size>
       </property>
       <property name="text">
-       <string>0.4</string>
+       <string>0.1</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_hole_y_rect">
-      <property name="geometry">
-       <rect>
-        <x>390</x>
-        <y>70</y>
-        <width>160</width>
-        <height>36</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>160</width>
-        <height>36</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>160</width>
-        <height>36</height>
-       </size>
-      </property>
-      <property name="sizeIncrement">
-       <size>
-        <width>160</width>
-        <height>36</height>
-       </size>
-      </property>
-      <property name="baseSize">
-       <size>
-        <width>160</width>
-        <height>36</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>0.4</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_screen_rect">
+     <widget class="QLineEdit" name="lineEdit_N_rect">
       <property name="geometry">
        <rect>
         <x>670</x>
         <y>20</y>
+        <width>160</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>160</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>160</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="sizeIncrement">
+       <size>
+        <width>160</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>160</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>1000</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_source_rect">
+      <property name="geometry">
+       <rect>
+        <x>390</x>
+        <y>70</y>
         <width>160</width>
         <height>36</height>
        </rect>
@@ -476,53 +476,13 @@
        </size>
       </property>
       <property name="text">
-       <string>孔宽：</string>
+       <string>矩孔尺寸：</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
      <widget class="QLabel" name="label_5">
-      <property name="geometry">
-       <rect>
-        <x>280</x>
-        <y>70</y>
-        <width>120</width>
-        <height>36</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>36</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>100</width>
-        <height>36</height>
-       </size>
-      </property>
-      <property name="sizeIncrement">
-       <size>
-        <width>100</width>
-        <height>36</height>
-       </size>
-      </property>
-      <property name="baseSize">
-       <size>
-        <width>100</width>
-        <height>36</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>孔高：</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_6">
       <property name="geometry">
        <rect>
         <x>560</x>
@@ -556,7 +516,47 @@
        </size>
       </property>
       <property name="text">
-       <string>屏宽：</string>
+       <string>像素数：</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>70</y>
+        <width>120</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>100</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="sizeIncrement">
+       <size>
+        <width>100</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>100</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>源平面尺寸：</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -602,7 +602,7 @@
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox">
+     <widget class="QComboBox" name="comboBox_rect">
       <property name="geometry">
        <rect>
         <x>670</x>
@@ -765,13 +765,13 @@
        </size>
       </property>
       <property name="text">
-       <string>孔半径：</string>
+       <string>圆孔半径：</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_hole_x_circ">
+     <widget class="QLineEdit" name="lineEdit_hole_circ">
       <property name="geometry">
        <rect>
         <x>390</x>
@@ -805,7 +805,7 @@
        </size>
       </property>
       <property name="text">
-       <string>1</string>
+       <string>0.1</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -845,13 +845,13 @@
        </size>
       </property>
       <property name="text">
-       <string>屏宽：</string>
+       <string>像素数：</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_screen_circ">
+     <widget class="QLineEdit" name="lineEdit_N_circ">
       <property name="geometry">
        <rect>
         <x>670</x>
@@ -885,7 +885,7 @@
        </size>
       </property>
       <property name="text">
-       <string>10</string>
+       <string>1000</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1012,6 +1012,11 @@
       </property>
       <item>
        <property name="text">
+        <string>平面图像</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
         <string>曲线图</string>
        </property>
       </item>
@@ -1130,13 +1135,13 @@
        </size>
       </property>
       <property name="text">
-       <string>孔高：</string>
+       <string>源平面尺寸：</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_hole_y_circ">
+     <widget class="QLineEdit" name="lineEdit_source_circ">
       <property name="geometry">
        <rect>
         <x>390</x>
@@ -1168,6 +1173,9 @@
         <width>160</width>
         <height>36</height>
        </size>
+      </property>
+      <property name="text">
+       <string>10</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1218,15 +1226,15 @@
      <widget class="QLineEdit" name="lineEdit_distance_grating">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>70</x>
         <y>70</y>
-        <width>160</width>
+        <width>120</width>
         <height>36</height>
        </rect>
       </property>
       <property name="minimumSize">
        <size>
-        <width>160</width>
+        <width>120</width>
         <height>36</height>
        </size>
       </property>
@@ -1258,7 +1266,7 @@
      <widget class="QLabel" name="label_14">
       <property name="geometry">
        <rect>
-        <x>280</x>
+        <x>160</x>
         <y>20</y>
         <width>120</width>
         <height>36</height>
@@ -1298,15 +1306,15 @@
      <widget class="QLineEdit" name="lineEdit_a_grating">
       <property name="geometry">
        <rect>
-        <x>390</x>
+        <x>270</x>
         <y>20</y>
-        <width>160</width>
+        <width>120</width>
         <height>36</height>
        </rect>
       </property>
       <property name="minimumSize">
        <size>
-        <width>160</width>
+        <width>120</width>
         <height>36</height>
        </size>
       </property>
@@ -1338,7 +1346,7 @@
      <widget class="QLabel" name="label_15">
       <property name="geometry">
        <rect>
-        <x>560</x>
+        <x>390</x>
         <y>20</y>
         <width>120</width>
         <height>36</height>
@@ -1369,24 +1377,24 @@
        </size>
       </property>
       <property name="text">
-       <string>屏宽：</string>
+       <string> 源平面尺寸：</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_screen_grating">
+     <widget class="QLineEdit" name="lineEdit_source_grating">
       <property name="geometry">
        <rect>
-        <x>670</x>
+        <x>500</x>
         <y>20</y>
-        <width>160</width>
+        <width>120</width>
         <height>36</height>
        </rect>
       </property>
       <property name="minimumSize">
        <size>
-        <width>160</width>
+        <width>120</width>
         <height>36</height>
        </size>
       </property>
@@ -1418,7 +1426,7 @@
      <widget class="QLabel" name="label_16">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>-40</x>
         <y>70</y>
         <width>120</width>
         <height>36</height>
@@ -1458,7 +1466,7 @@
      <widget class="QLabel" name="label_17">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>-40</x>
         <y>20</y>
         <width>120</width>
         <height>36</height>
@@ -1498,15 +1506,15 @@
      <widget class="QComboBox" name="comboBox_grating">
       <property name="geometry">
        <rect>
-        <x>670</x>
+        <x>710</x>
         <y>70</y>
-        <width>160</width>
+        <width>120</width>
         <height>36</height>
        </rect>
       </property>
       <property name="minimumSize">
        <size>
-        <width>160</width>
+        <width>120</width>
         <height>36</height>
        </size>
       </property>
@@ -1542,15 +1550,15 @@
      <widget class="QLineEdit" name="lineEdit_lambda_grating">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>70</x>
         <y>20</y>
-        <width>160</width>
+        <width>120</width>
         <height>36</height>
        </rect>
       </property>
       <property name="minimumSize">
        <size>
-        <width>160</width>
+        <width>120</width>
         <height>36</height>
        </size>
       </property>
@@ -1582,7 +1590,7 @@
      <widget class="QLabel" name="label_18">
       <property name="geometry">
        <rect>
-        <x>560</x>
+        <x>600</x>
         <y>70</y>
         <width>120</width>
         <height>36</height>
@@ -1622,7 +1630,7 @@
      <widget class="QLabel" name="label_19">
       <property name="geometry">
        <rect>
-        <x>280</x>
+        <x>160</x>
         <y>70</y>
         <width>120</width>
         <height>36</height>
@@ -1662,15 +1670,15 @@
      <widget class="QLineEdit" name="lineEdit_d_grating">
       <property name="geometry">
        <rect>
-        <x>390</x>
+        <x>270</x>
         <y>70</y>
-        <width>160</width>
+        <width>120</width>
         <height>36</height>
        </rect>
       </property>
       <property name="minimumSize">
        <size>
-        <width>160</width>
+        <width>120</width>
         <height>36</height>
        </size>
       </property>
@@ -1697,6 +1705,86 @@
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_N_grating">
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>70</y>
+        <width>120</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>160</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="sizeIncrement">
+       <size>
+        <width>160</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>160</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>800</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_21">
+      <property name="geometry">
+       <rect>
+        <x>390</x>
+        <y>70</y>
+        <width>120</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>100</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="sizeIncrement">
+       <size>
+        <width>100</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>100</width>
+        <height>36</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>像素数量：</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
     </widget>
