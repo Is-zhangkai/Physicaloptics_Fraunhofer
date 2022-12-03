@@ -42,6 +42,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     def Click_Rect(self):
+
         print("Click_Rect")
         try:
             mylambda=int(self.lineEdit_lambda_rect.text())*1E-6
@@ -87,6 +88,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     def show_image(self, img, view):
+        """
+        :param img:
+        :param view:
+        :return:
+        """
         flag = len(img.shape)
         if flag == 2:
             height, width = img.shape
@@ -103,6 +109,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         view.setScene(scene)
         view.show()
     def show_result(self,I_diffraction,I_fft,text):
+        """
+
+        :param I_diffraction:
+        :param I_fft:
+        :param text:
+        :return:
+        """
 
         if text=="平面图像":
             self.show_image(I_diffraction, self.graphicsView_left)
@@ -110,8 +123,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             I_fft=cv2.imread("1.jpg")
             self.show_image(I_fft,self.graphicsView_right)
         else:
-            y1=I_diffraction[round(np.size(I_diffraction, 1) / 2)]
-            y2=I_fft[round(np.size(I_fft, 1) / 2)]
+            y1=I_diffraction[round(np.size(I_diffraction, 0) / 2)]
+            y2=I_fft[round(np.size(I_fft, 0) / 2)]
             figure1 = figureCanvas()
             figure1.axes.plot(y1 ,'b', linewidth=1, label="diffraction")
             figure1.axes.plot(y2,'r', linewidth=0.5,linestyle="--", label="fft")
